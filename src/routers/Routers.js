@@ -11,6 +11,8 @@ import Blog from '../pages/Blog';
 import BlogDetails from '../pages/BlogDetails';
 import NotFound from '../pages/NotFound';
 import Contact from '../pages/Contact';
+import SignUp from '../SignUp/SignUp';
+import Login from '../Login/Login';
 
 const Routers = () => {
   return (
@@ -23,6 +25,8 @@ const Routers = () => {
         <Route path='/blogs' element={<Blog/>}></Route>
         <Route path='/blogs/:slug' element={<BlogDetails/>}></Route>
         <Route path='/contact' element={<Contact/>}></Route>
+        <Route path='/signup' element={<SignUp/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
         <Route path='*' element={<NotFound/>}></Route>
     </Routes>
   )

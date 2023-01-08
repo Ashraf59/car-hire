@@ -1,8 +1,11 @@
 
 
-import React, { useRef } from 'react'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-hot-toast';
 import { Link, NavLink } from 'react-router-dom';
 import { Col, Container, Row } from 'reactstrap';
+import app from '../../firebase/firebase.config';
 import '../../Style/header.css';
 
 const navLinks = [
@@ -29,11 +32,32 @@ const navLinks = [
  
 ]
 
+const auth = getAuth(app)
+
 const Header = () => {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+   const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser);
+    })
+    return () => {
+      unsubscribe();
+    }
+  },[])
 
   const menuRef = useRef(null);
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
+
+  const handleLogOut = () => {
+      signOut(auth)
+      .then(()=> {
+        toast.success('User successfully signout')
+      })
+      .catch(error=> console.log(error))
+  }
 
 
   return <header className='header'>
@@ -54,8 +78,18 @@ const Header = () => {
           </Col>
           <Col lg='6' md='6' sm='6'>
             <div className='header_top_right d-flex align-items-center justify-content-end gap-3'>
-            <Link to='#' className='d-flex align-items-center gap-1'><i class="ri-login-circle-line"></i>Login</Link>
-            <Link to='#' className='d-flex align-items-center gap-1'><i class="ri-login-circle-line"></i>Register</Link>
+            {
+              user?.uid? 
+              <Link onClick={handleLogOut} className='d-flex align-items-center gap-1'><i class="ri-login-circle-line"></i>Logout</Link>
+              :
+            <>
+            <Link to='/login' className='d-flex align-items-center gap-1'><i class="ri-login-circle-line"></i>Login</Link>
+            <Link to='/signup' className='d-flex align-items-center gap-1'><i class="ri-login-circle-line"></i>Register</Link>
+            </> 
+            }
+            {
+              user?.email && <span>{user.displayName} {user.photoURL}</span>
+            }
             </div>
           </Col>
         </Row>

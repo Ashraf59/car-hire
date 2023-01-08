@@ -1,0 +1,27 @@
+.login__form-style{
+    width: 450px;
+    height: 430px;
+    box-shadow: 8px 13px 30px -3px rgba(0,0,0,0.1);
+    padding: 0 30px;
+}
+.register__btn{
+    padding: 7px 15px;
+    background: #000d6b !important;
+    color: #fff !important;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.img__size{
+    width: 480px;
+    height: 480px;
+}
+.reset{
+    color: rgb(11, 174, 239) !important;
+    text-decoration: none !important;
+}
+.reset:hover{
+    color: rgb(9, 106, 144) !important;
+}
