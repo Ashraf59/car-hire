@@ -3,9 +3,9 @@ Car hire website is a car rental website. Also User can read article on differen
 
 ## About Car Hire Project:
 Project's Name: **Car Hire**
-"*" User can rent car 
-"*" User can read blog on brand new car
-"*" User can Register and Login
+* User can rent car 
+* User can read blog on brand new car
+* User can Register and Login
 
 <!-- ## Admin Login Info
 adminEmail:: \<admin@gmail.com\>
@@ -48,14 +48,3 @@ Icon -> [Remix Icons](https://remixicon.com/)
 
 
 
-/*
-## Context API:
-1. Declare a context
-2. set provider with value
-3. useContext in the place where you want to get the context
- */
-
- /*
- ## Private Route
- 1. Declare a private route component
- */
