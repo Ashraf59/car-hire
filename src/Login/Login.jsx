@@ -4,7 +4,7 @@ import Helmet from '../components/Helmet/Helmet'
 import CommonSection from '../components/UI/CommonSection'
 import '../../src/Style/login.css'
 import login from '../assets/login/login.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth'
 import app from '../firebase/firebase.config'
 import { toast } from 'react-hot-toast'
@@ -13,6 +13,7 @@ const auth = getAuth(app);
 
 const Login = () => {
     const [userEmail, setUserEmail] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = event => {
         event.preventDefault();
@@ -26,6 +27,7 @@ const Login = () => {
             console.log(user);
             form.reset();
             toast.success('Successfully login');
+            navigate('/')
         })
         .catch(error=> {
             console.error(error)

@@ -19,3 +19,25 @@
     width: 480px;
     height: 480px;
 }
+
+@media only screen and (max-width: 992px){
+ 
+    .form__style{
+        width: 400px;
+        height: 540px;
+       
+    }
+}
+
+/*Resposive for mobile device*/
+@media only screen and (max-width: 768px){
+    .img__size{
+        width: 335px;
+        height: 280px;
+    }
+   
+    .register__form{
+        margin: auto;
+    }
+
+}

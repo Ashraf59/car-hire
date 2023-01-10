@@ -4,7 +4,7 @@ import Helmet from '../components/Helmet/Helmet'
 import CommonSection from '../components/UI/CommonSection'
 import '../../src/Style/signup.css'
 import signup from '../assets/signup/signup.svg'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import {createUserWithEmailAndPassword, getAuth, updateProfile} from 'firebase/auth'
 import app from '../firebase/firebase.config';
 import { toast } from 'react-hot-toast'
@@ -13,6 +13,7 @@ const auth = getAuth(app)
 
 const SignUp = () => {
     const [passwordError, setPasswordError] = useState('');
+    const navigate = useNavigate();
 
     const handleRegister = event => {
         event.preventDefault();
@@ -20,6 +21,7 @@ const SignUp = () => {
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
+        const confirm = form.confirm.value;
         console.log(name, email, password)
         if(!/(?=(.*[a-z]){2,})/.test(password)){
             setPasswordError('Please provide atleast two lowercase')
@@ -38,6 +40,10 @@ const SignUp = () => {
             setPasswordError('Please provide atleast six character')
             return;
         }
+        if(password !== confirm){
+            setPasswordError('Your password did not match')
+            return;
+        }
 
         setPasswordError('');
         createUserWithEmailAndPassword(auth, email, password)
@@ -46,7 +52,9 @@ const SignUp = () => {
             console.log(user);
             form.reset();
             toast.success('Sign Up successful')
+            navigate('/')
             updateUserName(name)
+
         })
         .catch(error => {
             console.error(error)
@@ -73,12 +81,12 @@ const SignUp = () => {
         <section>
             <Container>
                 <Row className='d-flex align-items-center justify-content-between ms-5'>
-                    <Col lg='6' md='6' className='form__style p-5'>
+                    <Col lg='6' md='6' sm='12' className='form__style p-5'>
                     <h6 className="fw-bold fs-2 text-center">Register Now! </h6>
                     <Form onSubmit={handleRegister}>
                         <FormGroup className='register__form'>
                             <Label>Name</Label>
-                            <Input placeholder='Your Name' name = 'name' type='text'/>
+                            <Input placeholder='Your Name' name = 'name' type='text' required/>
                         </FormGroup>
                         <FormGroup className='register__form'>
                             <Label>Email</Label>
@@ -90,7 +98,7 @@ const SignUp = () => {
                         </FormGroup>
                         <FormGroup className='register__form'>
                             <Label>Confirm Password</Label>
-                            <Input placeholder='Confirm Your Password' name = 'confirm' type='password'/>
+                            <Input placeholder='Confirm Your Password' name = 'confirm' type='password' required/>
                         </FormGroup>
                         <p className='text-danger'>{passwordError}</p>
 
@@ -102,7 +110,7 @@ const SignUp = () => {
 
                     </Col>
 
-                    <Col lg='6' md='6'>
+                    <Col lg='6' md='6' sm='12'>
                         <img src={signup} alt="Sign Up" className='img__size' />
                     </Col>
                 </Row>
